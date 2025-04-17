@@ -14,7 +14,7 @@ public class UserMapperImpl implements UserMapper {
         if (userRequest == null) {
             return null;
         }
-        return new User(null, userRequest.email(), userRequest.email(), userRequest.password());
+        return new User(null, userRequest.name(), userRequest.email(), userRequest.password());
     }
 
     @Override
