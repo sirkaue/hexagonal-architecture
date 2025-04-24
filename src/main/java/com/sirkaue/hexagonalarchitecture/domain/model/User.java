@@ -33,4 +33,8 @@ public class User {
     public User changePasswordTo(String newPassword) {
         return new User(this.id, this.name, this.email, newPassword);
     }
+
+    public User changeEmailTo(String newEmail) {
+        return new User(this.id, this.name, newEmail, this.password);
+    }
 }
