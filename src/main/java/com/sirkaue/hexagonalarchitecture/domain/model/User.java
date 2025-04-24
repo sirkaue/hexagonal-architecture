@@ -29,4 +29,8 @@ public class User {
     public String getPassword() {
         return password;
     }
+
+    public User changePasswordTo(String newPassword) {
+        return new User(this.id, this.name, this.email, newPassword);
+    }
 }
