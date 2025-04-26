@@ -4,8 +4,12 @@ import com.sirkaue.hexagonalarchitecture.application.ports.in.FindUserByIdUseCas
 import com.sirkaue.hexagonalarchitecture.application.ports.out.FindUserByIdPort;
 import com.sirkaue.hexagonalarchitecture.domain.exception.UserNotFoundException;
 import com.sirkaue.hexagonalarchitecture.domain.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FindUserByIdUseCaseImpl implements FindUserByIdUseCase {
+
+    private static final Logger log = LoggerFactory.getLogger(FindUserByIdUseCaseImpl.class);
 
     private final FindUserByIdPort findUserByIdPort;
 
@@ -15,6 +19,7 @@ public class FindUserByIdUseCaseImpl implements FindUserByIdUseCase {
 
     @Override
     public User execute(Long id) {
+        log.info("Finding user with id: {}", id);
         return findUserByIdPort.findById(id).orElseThrow(
                 () -> new UserNotFoundException(String.format("User with id %s not found", id)));
     }
