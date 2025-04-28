@@ -1,7 +1,7 @@
-package com.sirkaue.hexagonalarchitecture.infra.adapters.out.repository.mapper;
+package com.sirkaue.hexagonalarchitecture.infra.adapters.out.persistence.mapper;
 
 import com.sirkaue.hexagonalarchitecture.domain.model.User;
-import com.sirkaue.hexagonalarchitecture.infra.adapters.out.repository.entity.UserEntity;
+import com.sirkaue.hexagonalarchitecture.infra.adapters.out.persistence.entity.UserEntity;
 
 public interface UserEntityMapper {
 

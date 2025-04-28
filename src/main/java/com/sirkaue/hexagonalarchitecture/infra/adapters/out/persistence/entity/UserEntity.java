@@ -1,4 +1,4 @@
-package com.sirkaue.hexagonalarchitecture.infra.adapters.out.repository.entity;
+package com.sirkaue.hexagonalarchitecture.infra.adapters.out.persistence.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -18,6 +18,8 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    @Column(nullable = false, unique = true)
     private String email;
     private String password;
 }

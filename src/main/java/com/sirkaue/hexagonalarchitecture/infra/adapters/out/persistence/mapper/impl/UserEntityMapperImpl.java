@@ -1,8 +1,8 @@
-package com.sirkaue.hexagonalarchitecture.infra.adapters.out.repository.mapper.impl;
+package com.sirkaue.hexagonalarchitecture.infra.adapters.out.persistence.mapper.impl;
 
 import com.sirkaue.hexagonalarchitecture.domain.model.User;
-import com.sirkaue.hexagonalarchitecture.infra.adapters.out.repository.entity.UserEntity;
-import com.sirkaue.hexagonalarchitecture.infra.adapters.out.repository.mapper.UserEntityMapper;
+import com.sirkaue.hexagonalarchitecture.infra.adapters.out.persistence.entity.UserEntity;
+import com.sirkaue.hexagonalarchitecture.infra.adapters.out.persistence.mapper.UserEntityMapper;
 import org.springframework.stereotype.Component;
 
 @Component
