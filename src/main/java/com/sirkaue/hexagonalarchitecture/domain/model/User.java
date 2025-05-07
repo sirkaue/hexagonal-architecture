@@ -1,13 +1,16 @@
 package com.sirkaue.hexagonalarchitecture.domain.model;
 
+import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Email;
+import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Password;
+
 public class User {
 
     private final Long id;
     private final String name;
-    private final String email;
-    private final String password;
+    private final Email email;
+    private final Password password;
 
-    public User(Long id, String name, String email, String password) {
+    public User(Long id, String name, Email email, Password password) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -22,19 +25,19 @@ public class User {
         return name;
     }
 
-    public String getEmail() {
+    public Email getEmail() {
         return email;
     }
 
-    public String getPassword() {
+    public Password getPassword() {
         return password;
     }
 
     public User changePasswordTo(String newPassword) {
-        return new User(this.id, this.name, this.email, newPassword);
+        return new User(this.id, this.name, this.email, new Password(newPassword));
     }
 
     public User changeEmailTo(String newEmail) {
-        return new User(this.id, this.name, newEmail, this.password);
+        return new User(this.id, this.name, new Email(newEmail), this.password);
     }
 }
