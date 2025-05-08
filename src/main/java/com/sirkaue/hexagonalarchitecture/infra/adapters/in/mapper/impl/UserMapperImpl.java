@@ -1,11 +1,11 @@
 package com.sirkaue.hexagonalarchitecture.infra.adapters.in.mapper.impl;
 
-import com.sirkaue.hexagonalarchitecture.infra.adapters.in.dto.request.UserRequest;
-import com.sirkaue.hexagonalarchitecture.infra.adapters.in.dto.response.UserResponse;
-import com.sirkaue.hexagonalarchitecture.infra.adapters.in.mapper.UserMapper;
 import com.sirkaue.hexagonalarchitecture.domain.model.User;
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Email;
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Password;
+import com.sirkaue.hexagonalarchitecture.infra.adapters.in.dto.request.UserRequest;
+import com.sirkaue.hexagonalarchitecture.infra.adapters.in.dto.response.UserResponse;
+import com.sirkaue.hexagonalarchitecture.infra.adapters.in.mapper.UserMapper;
 import org.springframework.stereotype.Component;
 
 @Component
