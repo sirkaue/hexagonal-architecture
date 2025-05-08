@@ -1,8 +1,8 @@
-package com.sirkaue.hexagonalarchitecture.application.mapper.impl;
+package com.sirkaue.hexagonalarchitecture.infra.adapters.in.mapper.impl;
 
-import com.sirkaue.hexagonalarchitecture.application.dto.request.UserRequest;
-import com.sirkaue.hexagonalarchitecture.application.dto.response.UserResponse;
-import com.sirkaue.hexagonalarchitecture.application.mapper.UserMapper;
+import com.sirkaue.hexagonalarchitecture.infra.adapters.in.dto.request.UserRequest;
+import com.sirkaue.hexagonalarchitecture.infra.adapters.in.dto.response.UserResponse;
+import com.sirkaue.hexagonalarchitecture.infra.adapters.in.mapper.UserMapper;
 import com.sirkaue.hexagonalarchitecture.domain.model.User;
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Email;
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Password;
