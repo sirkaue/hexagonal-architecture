@@ -1,8 +1,10 @@
 package com.sirkaue.hexagonalarchitecture.application.ports.out;
 
+import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Password;
+
 public interface PasswordEncoderPort {
 
-    String encode(String rawPassword);
+    String encode(Password rawPassword);
 
-    boolean matches(String rawPassword, String encodedPassword);
+    boolean matches(Password rawPassword, String encodedPassword);
 }
