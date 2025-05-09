@@ -3,6 +3,8 @@ package com.sirkaue.hexagonalarchitecture.application.helper;
 import com.sirkaue.hexagonalarchitecture.application.ports.out.FindUserByIdPort;
 import com.sirkaue.hexagonalarchitecture.domain.exception.UserNotFoundException;
 import com.sirkaue.hexagonalarchitecture.domain.model.User;
+import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Email;
+import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Password;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
@@ -28,7 +30,7 @@ class EntityFinderHelperTest {
     @Test
     void shouldFindUserById() {
         // Arrange
-        User user = new User(1L, "John Doe", "john@test.com", "password");
+        User user = new User(1L, "John Doe", new Email("teste@teste.com"), new Password("password"));
         when(findUserByIdPort.findById(user.getId())).thenReturn(Optional.of(user));
 
         // Act
