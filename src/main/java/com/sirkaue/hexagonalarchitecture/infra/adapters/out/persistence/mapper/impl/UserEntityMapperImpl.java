@@ -12,17 +12,11 @@ public class UserEntityMapperImpl implements UserEntityMapper {
 
     @Override
     public UserEntity toUserEntity(User user) {
-        if (user == null) {
-            return null;
-        }
         return new UserEntity(user.getId(), user.getName(), user.getEmail().value(), user.getPassword().value());
     }
 
     @Override
     public User toUser(UserEntity userEntity) {
-        if (userEntity == null) {
-            return null;
-        }
         return new User(userEntity.getId(), userEntity.getName(), new Email(userEntity.getEmail()), new Password(userEntity.getPassword()));
     }
 }
