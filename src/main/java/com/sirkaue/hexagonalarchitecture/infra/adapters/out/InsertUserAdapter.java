@@ -1,10 +1,10 @@
-package com.sirkaue.hexagonalarchitecture.infra.adapters.out.impl;
+package com.sirkaue.hexagonalarchitecture.infra.adapters.out;
 
 import com.sirkaue.hexagonalarchitecture.application.ports.out.InsertUserPort;
 import com.sirkaue.hexagonalarchitecture.domain.model.User;
-import com.sirkaue.hexagonalarchitecture.infra.adapters.out.repository.UserRepository;
-import com.sirkaue.hexagonalarchitecture.infra.adapters.out.repository.entity.UserEntity;
-import com.sirkaue.hexagonalarchitecture.infra.adapters.out.repository.mapper.UserEntityMapper;
+import com.sirkaue.hexagonalarchitecture.infra.adapters.out.persistence.entity.UserEntity;
+import com.sirkaue.hexagonalarchitecture.infra.adapters.out.persistence.mapper.UserEntityMapper;
+import com.sirkaue.hexagonalarchitecture.infra.adapters.out.repository.UserJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -12,12 +12,12 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class InsertUserAdapter implements InsertUserPort {
 
-    private final UserRepository userRepository;
+    private final UserJpaRepository userJpaRepository;
     private final UserEntityMapper userEntityMapper;
 
     @Override
     public void insert(User user) {
         UserEntity entity = userEntityMapper.toUserEntity(user);
-        userRepository.save(entity);
+        userJpaRepository.save(entity);
     }
 }
