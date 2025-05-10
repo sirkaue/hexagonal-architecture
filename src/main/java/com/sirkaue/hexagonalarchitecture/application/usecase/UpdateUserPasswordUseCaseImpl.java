@@ -3,7 +3,7 @@ package com.sirkaue.hexagonalarchitecture.application.usecase;
 import com.sirkaue.hexagonalarchitecture.application.helper.EntityFinderHelper;
 import com.sirkaue.hexagonalarchitecture.application.ports.in.UpdateUserPasswordUseCase;
 import com.sirkaue.hexagonalarchitecture.application.ports.out.PasswordEncoderPort;
-import com.sirkaue.hexagonalarchitecture.application.ports.out.UpdateUserPasswordPort;
+import com.sirkaue.hexagonalarchitecture.application.ports.out.UpdateUserPort;
 import com.sirkaue.hexagonalarchitecture.domain.exception.IncorrectCurrentPasswordException;
 import com.sirkaue.hexagonalarchitecture.domain.exception.PasswordConfirmationException;
 import com.sirkaue.hexagonalarchitecture.domain.exception.SamePasswordException;
@@ -18,13 +18,13 @@ public class UpdateUserPasswordUseCaseImpl implements UpdateUserPasswordUseCase 
 
     private final EntityFinderHelper entityFinderHelper;
     private final PasswordEncoderPort passwordEncoderPort;
-    private final UpdateUserPasswordPort updateUserPasswordPort;
+    private final UpdateUserPort updateUserPort;
 
     public UpdateUserPasswordUseCaseImpl(EntityFinderHelper entityFinderHelper, PasswordEncoderPort passwordEncoderPort,
-                                         UpdateUserPasswordPort updateUserPasswordPort) {
+                                         UpdateUserPort updateUserPort) {
         this.entityFinderHelper = entityFinderHelper;
         this.passwordEncoderPort = passwordEncoderPort;
-        this.updateUserPasswordPort = updateUserPasswordPort;
+        this.updateUserPort = updateUserPort;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class UpdateUserPasswordUseCaseImpl implements UpdateUserPasswordUseCase 
         String hashedNewPassword = passwordEncoderPort.encode(newPassword);
         User updatedUser = user.changePasswordTo(hashedNewPassword);
 
-        return updateUserPasswordPort.update(updatedUser);
+        return updateUserPort.update(updatedUser);
     }
 
     private void validatePassword(Password currentPassword, Password currentPasswordProvided,
