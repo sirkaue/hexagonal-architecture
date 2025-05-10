@@ -2,7 +2,7 @@ package com.sirkaue.hexagonalarchitecture.application.usecase;
 
 import com.sirkaue.hexagonalarchitecture.application.helper.EntityFinderHelper;
 import com.sirkaue.hexagonalarchitecture.application.ports.in.UpdateUserEmailUseCase;
-import com.sirkaue.hexagonalarchitecture.application.ports.out.UpdateUserEmailPort;
+import com.sirkaue.hexagonalarchitecture.application.ports.out.UpdateUserPort;
 import com.sirkaue.hexagonalarchitecture.application.ports.out.UserExistsByEmailPort;
 import com.sirkaue.hexagonalarchitecture.domain.exception.EmailAlreadyExistsException;
 import com.sirkaue.hexagonalarchitecture.domain.model.User;
@@ -16,13 +16,12 @@ public class UpdateUserEmailUseCaseImpl implements UpdateUserEmailUseCase {
 
     private final EntityFinderHelper entityFinderHelper;
     private final UserExistsByEmailPort userExistsByEmailPort;
-    private final UpdateUserEmailPort updateUserEmailPort;
+    private final UpdateUserPort updateUserPort;
 
-    public UpdateUserEmailUseCaseImpl(EntityFinderHelper entityFinderHelper, UserExistsByEmailPort userExistsByEmailPort,
-                                      UpdateUserEmailPort updateUserEmailPort) {
+    public UpdateUserEmailUseCaseImpl(EntityFinderHelper entityFinderHelper, UserExistsByEmailPort userExistsByEmailPort, UpdateUserPort updateUserPort) {
         this.entityFinderHelper = entityFinderHelper;
         this.userExistsByEmailPort = userExistsByEmailPort;
-        this.updateUserEmailPort = updateUserEmailPort;
+        this.updateUserPort = updateUserPort;
     }
 
 
@@ -36,7 +35,7 @@ public class UpdateUserEmailUseCaseImpl implements UpdateUserEmailUseCase {
 
         log.info("Updating email for user with id: {}", id);
         User updatedUser = user.changeEmailTo(newEmail);
-        return updateUserEmailPort.update(updatedUser);
+        return updateUserPort.update(updatedUser);
     }
 
     private void validateEmail(Email newEmail, User user) {
