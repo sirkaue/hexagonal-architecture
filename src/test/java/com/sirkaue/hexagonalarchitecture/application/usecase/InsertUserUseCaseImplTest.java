@@ -1,9 +1,12 @@
 package com.sirkaue.hexagonalarchitecture.application.usecase;
 
 import com.sirkaue.hexagonalarchitecture.application.ports.out.InsertUserPort;
+import com.sirkaue.hexagonalarchitecture.application.ports.out.PasswordEncoderPort;
 import com.sirkaue.hexagonalarchitecture.application.ports.out.UserExistsByEmailPort;
 import com.sirkaue.hexagonalarchitecture.domain.exception.EmailAlreadyExistsException;
 import com.sirkaue.hexagonalarchitecture.domain.model.User;
+import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Email;
+import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Password;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
@@ -24,20 +27,27 @@ class InsertUserUseCaseImplTest {
     @Mock
     private UserExistsByEmailPort userExistsByEmailPort;
 
+    @Mock
+    private PasswordEncoderPort passwordEncoderPort;
+
     @InjectMocks
     private InsertUserUseCaseImpl insertUserUseCase;
 
     @Test
     void shouldInsertUserWhenEmailDoesNotExist() {
         // Arrange
-        User user = new User(1L, "John Doe", "teste@teste.com", "123456");
+        User user = new User(1L, "John Doe", new Email("teste@teste.com"), new Password("123456"));
+
         when(userExistsByEmailPort.existsByEmail(anyString())).thenReturn(false);
+        when(passwordEncoderPort.encode(new Password("123456"))).thenReturn("hashedPassword");
+        doNothing().when(insertUserPort).insert(any(User.class));
 
         // Act
         insertUserUseCase.execute(user);
 
         // Assert
         verify(userExistsByEmailPort, times(1)).existsByEmail(anyString());
+        verify(passwordEncoderPort, times(1)).encode(any(Password.class));
         verify(insertUserPort, times(1)).insert(any(User.class));
     }
 
@@ -45,7 +55,7 @@ class InsertUserUseCaseImplTest {
     void shouldThrowEmailAlreadyExistsExceptionWhenEmailExists() {
         // Arrange
         final String EMAIL_ALREADY_EXISTS = "Email already exists";
-        User user = new User(1L, "John Doe", "teste@teste.com", "123456");
+        User user = new User(1L, "John Doe", new Email("teste@teste.com"), new Password("123456"));
         when(userExistsByEmailPort.existsByEmail(anyString())).thenReturn(true);
 
         // Act
@@ -56,6 +66,7 @@ class InsertUserUseCaseImplTest {
         assertEquals(EMAIL_ALREADY_EXISTS, ex.getMessage());
 
         verify(userExistsByEmailPort, times(1)).existsByEmail(anyString());
+        verify(passwordEncoderPort, never()).encode(any());
         verify(insertUserPort, never()).insert(any(User.class));
     }
 }
