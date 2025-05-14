@@ -1,16 +1,16 @@
 package com.sirkaue.hexagonalarchitecture.application.usecase;
 
-import com.sirkaue.hexagonalarchitecture.application.ports.out.FindUserByIdPort;
+import com.sirkaue.hexagonalarchitecture.application.helper.EntityFinderHelper;
 import com.sirkaue.hexagonalarchitecture.domain.exception.UserNotFoundException;
 import com.sirkaue.hexagonalarchitecture.domain.model.User;
+import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Email;
+import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Password;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.function.Executable;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -20,7 +20,7 @@ import static org.mockito.Mockito.*;
 class FindUserByIdUseCaseImplTest {
 
     @Mock
-    private FindUserByIdPort findUserByIdPort;
+    private EntityFinderHelper entityFinderHelper;
 
     @InjectMocks
     private FindUserByIdUseCaseImpl findUserByIdUseCase;
@@ -28,28 +28,29 @@ class FindUserByIdUseCaseImplTest {
     @Test
     void shouldFindUserById() {
         // Arrange
-        User user = new User(1L, "John Doe", "teste@teste.com", "123456");
-        when(findUserByIdPort.findById(anyLong())).thenReturn(Optional.of(user));
+        User user = new User(1L, "John Doe", new Email("teste@teste.com"), new Password("123456"));
+        when(entityFinderHelper.findUserByIdOrThrow(anyLong())).thenReturn(user);
 
         // Act
         User u = findUserByIdUseCase.execute(user.getId());
 
         // Assert
         assertEquals(user.getId(), u.getId());
-        verify(findUserByIdPort, times(1)).findById(anyLong());
+        verify(entityFinderHelper, times(1)).findUserByIdOrThrow(u.getId());
     }
 
     @Test
     void shouldThrowExceptionWhenUserNotFound() {
         // Arrange
-        User user = new User(1L, "John Doe", "teste@teste.com", "123456");
-        when(findUserByIdPort.findById(anyLong())).thenReturn(Optional.empty());
+        User user = new User(1L, "John Doe", new Email("teste@teste.com"), new Password("123456"));
+        when(entityFinderHelper.findUserByIdOrThrow(anyLong()))
+                .thenThrow(new UserNotFoundException(String.format("User with id %s not found", user.getId())));
 
         // Act
         Executable executable = () -> findUserByIdUseCase.execute(user.getId());
 
         // Assert
         assertThrows(UserNotFoundException.class, executable);
-        verify(findUserByIdPort, times(1)).findById(anyLong());
+        verify(entityFinderHelper, times(1)).findUserByIdOrThrow(user.getId());
     }
 }
