@@ -1,8 +1,9 @@
-package com.sirkaue.hexagonalarchitecture.application.usecase;
+package com.sirkaue.hexagonalarchitecture.unit.application.usecase;
 
 import com.sirkaue.hexagonalarchitecture.application.ports.out.InsertUserPort;
 import com.sirkaue.hexagonalarchitecture.application.ports.out.PasswordEncoderPort;
 import com.sirkaue.hexagonalarchitecture.application.ports.out.UserExistsByEmailPort;
+import com.sirkaue.hexagonalarchitecture.application.usecase.InsertUserUseCaseImpl;
 import com.sirkaue.hexagonalarchitecture.domain.exception.EmailAlreadyExistsException;
 import com.sirkaue.hexagonalarchitecture.domain.model.User;
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Email;
