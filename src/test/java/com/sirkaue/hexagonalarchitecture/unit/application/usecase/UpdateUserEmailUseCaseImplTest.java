@@ -4,20 +4,22 @@ import com.sirkaue.hexagonalarchitecture.application.helper.EntityFinderHelper;
 import com.sirkaue.hexagonalarchitecture.application.ports.out.UpdateUserPort;
 import com.sirkaue.hexagonalarchitecture.application.ports.out.UserExistsByEmailPort;
 import com.sirkaue.hexagonalarchitecture.application.usecase.UpdateUserEmailUseCaseImpl;
+import com.sirkaue.hexagonalarchitecture.domain.exception.EmailAlreadyExistsException;
 import com.sirkaue.hexagonalarchitecture.domain.model.User;
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Email;
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Password;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.function.Executable;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class UpdateUserEmailUseCaseImplTest {
@@ -61,5 +63,26 @@ class UpdateUserEmailUseCaseImplTest {
         verify(entityFinderHelper).findUserByIdOrThrow(user.getId());
         verify(userExistsByEmailPort).existsByEmail(newEmail);
         verify(updateUserPort).update(savedUser);
+    }
+
+    @Test
+    void shouldNotUpdateAndThrowEmailAlreadyExistsExceptionWhenEmailIsTheSame() {
+        // Arrange
+        final String SAME_EMAIL_EXCEPTION = "The new email is the same as the current one";
+        User user = new User(1L, "John Doe", new Email("teste@teste.com"), new Password("123456"));
+        String sameEmail = "teste@teste.com";
+
+        when(entityFinderHelper.findUserByIdOrThrow(anyLong())).thenReturn(user);
+
+        // Act
+        Executable executable = () -> updateUserEmailUseCase.execute(user.getId(), sameEmail);
+
+        // Assert
+        var ex = assertThrows(EmailAlreadyExistsException.class, executable);
+        assertEquals(SAME_EMAIL_EXCEPTION, ex.getMessage());
+
+        verify(entityFinderHelper).findUserByIdOrThrow(user.getId());
+        verify(userExistsByEmailPort, never()).existsByEmail(sameEmail);
+        verify(updateUserPort, never()).update(user);
     }
 }
