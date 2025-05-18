@@ -4,17 +4,20 @@ import com.sirkaue.hexagonalarchitecture.application.helper.EntityFinderHelper;
 import com.sirkaue.hexagonalarchitecture.application.ports.out.PasswordEncoderPort;
 import com.sirkaue.hexagonalarchitecture.application.ports.out.UpdateUserPort;
 import com.sirkaue.hexagonalarchitecture.application.usecase.UpdateUserPasswordUseCaseImpl;
+import com.sirkaue.hexagonalarchitecture.domain.exception.IncorrectCurrentPasswordException;
 import com.sirkaue.hexagonalarchitecture.domain.model.User;
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Email;
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Password;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.function.Executable;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -69,5 +72,25 @@ class UpdateUserPasswordUseCaseImplTest {
         verify(passwordEncoderPort).matches(newPasswordObj, user.getPassword().value());
         verify(passwordEncoderPort).encode(newPasswordObj);
         verify(updateUserPort).update(savedUser);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenCurrentPasswordIsIncorrect() {
+        // Arrange
+        User user = new User(1L, "John Doe", new Email("teste@teste.com"), new Password("123456"));
+        Password currentPassword = new Password("wrongPassword");
+        Password newPassword = new Password("admin123");
+        Password confirmPassword = new Password("admin123");
+
+        when(entityFinderHelper.findUserByIdOrThrow(anyLong())).thenReturn(user);
+        when(passwordEncoderPort.matches(currentPassword, user.getPassword().value())).thenReturn(false);
+
+        // Act
+        Executable executable = () -> updateUserPasswordUseCase.execute(user.getId(), currentPassword, newPassword, confirmPassword);
+
+        // Assert
+        assertThrows(IncorrectCurrentPasswordException.class, executable);
+        verify(entityFinderHelper).findUserByIdOrThrow(user.getId());
+        verify(passwordEncoderPort).matches(currentPassword, user.getPassword().value());
     }
 }
