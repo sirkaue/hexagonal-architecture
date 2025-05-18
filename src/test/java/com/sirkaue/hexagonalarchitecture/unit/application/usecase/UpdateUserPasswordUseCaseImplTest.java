@@ -5,6 +5,7 @@ import com.sirkaue.hexagonalarchitecture.application.ports.out.PasswordEncoderPo
 import com.sirkaue.hexagonalarchitecture.application.ports.out.UpdateUserPort;
 import com.sirkaue.hexagonalarchitecture.application.usecase.UpdateUserPasswordUseCaseImpl;
 import com.sirkaue.hexagonalarchitecture.domain.exception.IncorrectCurrentPasswordException;
+import com.sirkaue.hexagonalarchitecture.domain.exception.PasswordConfirmationException;
 import com.sirkaue.hexagonalarchitecture.domain.exception.SamePasswordException;
 import com.sirkaue.hexagonalarchitecture.domain.model.User;
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Email;
@@ -113,6 +114,30 @@ class UpdateUserPasswordUseCaseImplTest {
         assertThrows(SamePasswordException.class, executable);
         verify(entityFinderHelper).findUserByIdOrThrow(user.getId());
         verify(passwordEncoderPort, times(2)).matches(any(Password.class), anyString());
+        verifyNoMoreInteractions(passwordEncoderPort, entityFinderHelper, updateUserPort);
+    }
+
+    @Test
+    void shouldThrowExceptionWhenNewPasswordAndConfirmPasswordDoNotMatch() {
+        // Arrange
+        User user = new User(1L, "John Doe", new Email("teste@teste.com"), new Password("123456"));
+
+        Password currentPassword = new Password("123456");
+        Password newPassword = new Password("admin123");
+        Password confirmPassword = new Password("admin1234");
+
+        when(entityFinderHelper.findUserByIdOrThrow(anyLong())).thenReturn(user);
+        when(passwordEncoderPort.matches(currentPassword, user.getPassword().value())).thenReturn(true);
+        when(passwordEncoderPort.matches(newPassword, user.getPassword().value())).thenReturn(false);
+
+        // Act
+        Executable executable = () -> updateUserPasswordUseCase.execute(user.getId(), currentPassword, newPassword, confirmPassword);
+
+        // Assert
+        assertThrows(PasswordConfirmationException.class, executable);
+        verify(entityFinderHelper).findUserByIdOrThrow(user.getId());
+        verify(passwordEncoderPort).matches(currentPassword, user.getPassword().value());
+        verify(passwordEncoderPort).matches(newPassword, user.getPassword().value());
         verifyNoMoreInteractions(passwordEncoderPort, entityFinderHelper, updateUserPort);
     }
 }
