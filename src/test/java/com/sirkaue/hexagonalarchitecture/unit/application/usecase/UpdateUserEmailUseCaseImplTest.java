@@ -85,4 +85,26 @@ class UpdateUserEmailUseCaseImplTest {
         verify(userExistsByEmailPort, never()).existsByEmail(sameEmail);
         verify(updateUserPort, never()).update(user);
     }
+
+    @Test
+    void shouldNotUpdateAndThrowEmailAlreadyExistsExceptionWhenEmailExists() {
+        // Arrange
+        final String EMAIL_ALREADY_EXISTS_EXCEPTION = "Email already exists";
+        User user = new User(1L, "John Doe", new Email("teste@teste.com"), new Password("123456"));
+        String newEmail = "admin@admin.com";
+
+        when(entityFinderHelper.findUserByIdOrThrow(anyLong())).thenReturn(user);
+        when(userExistsByEmailPort.existsByEmail(newEmail)).thenReturn(true);
+
+        // Act
+        Executable executable = () -> updateUserEmailUseCase.execute(user.getId(), newEmail);
+
+        // Assert
+        var ex = assertThrows(EmailAlreadyExistsException.class, executable);
+        assertEquals(EMAIL_ALREADY_EXISTS_EXCEPTION, ex.getMessage());
+
+        verify(entityFinderHelper).findUserByIdOrThrow(user.getId());
+        verify(userExistsByEmailPort).existsByEmail(newEmail);
+        verify(updateUserPort, never()).update(user);
+    }
 }
