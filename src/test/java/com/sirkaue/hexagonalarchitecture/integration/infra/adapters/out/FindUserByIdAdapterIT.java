@@ -47,4 +47,13 @@ class FindUserByIdAdapterIT {
         assertEquals(savedUser.getEmail(), user.getEmail().value(), "Emails devem ser iguais");
         assertEquals(savedUser.getPassword(), user.getPassword().value(), "Senhas devem ser iguais");
     }
+
+    @Test
+    void shouldReturnEmptyWhenUserDoesNotExist() {
+        // Act
+        Optional<User> result = findUserByIdAdapter.findById(999L);
+
+        // Assert
+        assertTrue(result.isEmpty(), "Não deve encontrar usuário com ID inválido");
+    }
 }
