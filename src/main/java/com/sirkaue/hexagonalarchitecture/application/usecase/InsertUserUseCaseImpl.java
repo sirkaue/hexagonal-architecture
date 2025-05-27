@@ -25,7 +25,7 @@ public class InsertUserUseCaseImpl implements InsertUserUseCase {
     }
 
     @Override
-    public void execute(User user) {
+    public User execute(User user) {
         log.info("Creating user {} with email: {}", user.getName(), user.getEmail().value());
 
         if (userExistsByEmailPort.existsByEmail(user.getEmail().value())) {
@@ -35,6 +35,6 @@ public class InsertUserUseCaseImpl implements InsertUserUseCase {
         log.info("Encoding password");
         String hashedPassword = passwordEncoderPort.encode(user.getPassword());
         user = user.changePasswordTo(hashedPassword);
-        insertUserPort.insert(user);
+        return insertUserPort.insert(user);
     }
 }
