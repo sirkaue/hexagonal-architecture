@@ -4,5 +4,5 @@ import com.sirkaue.hexagonalarchitecture.domain.model.User;
 
 public interface InsertUserUseCase {
 
-    void execute(User user);
+    User execute(User user);
 }
