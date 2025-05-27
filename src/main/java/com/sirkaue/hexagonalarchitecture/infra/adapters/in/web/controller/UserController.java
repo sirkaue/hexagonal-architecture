@@ -12,9 +12,11 @@ import com.sirkaue.hexagonalarchitecture.infra.adapters.in.dto.request.UserReque
 import com.sirkaue.hexagonalarchitecture.infra.adapters.in.dto.response.UserResponse;
 import com.sirkaue.hexagonalarchitecture.infra.adapters.in.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping("/users")
@@ -30,8 +32,13 @@ public class UserController {
     @PostMapping
     public ResponseEntity<Void> insert(@RequestBody UserRequest userRequest) {
         User user = userMapper.toUser(userRequest);
-        insertUserUseCase.execute(user);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        User savedUser = insertUserUseCase.execute(user);
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(savedUser.getId())
+                .toUri();
+        return ResponseEntity.created(location).build();
     }
 
     @GetMapping("/{id}")
