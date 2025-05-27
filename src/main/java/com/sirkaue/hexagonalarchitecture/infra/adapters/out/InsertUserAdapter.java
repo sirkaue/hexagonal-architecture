@@ -16,8 +16,9 @@ public class InsertUserAdapter implements InsertUserPort {
     private final UserEntityMapper userEntityMapper;
 
     @Override
-    public void insert(User user) {
+    public User insert(User user) {
         UserEntity entity = userEntityMapper.toUserEntity(user);
-        userJpaRepository.save(entity);
+        UserEntity savedEntity = userJpaRepository.save(entity);
+        return userEntityMapper.toUser(savedEntity);
     }
 }
