@@ -4,5 +4,5 @@ import com.sirkaue.hexagonalarchitecture.domain.model.User;
 
 public interface InsertUserPort {
 
-    void insert(User user);
+    User insert(User user);
 }
