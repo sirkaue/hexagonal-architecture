@@ -41,7 +41,7 @@ class InsertUserUseCaseImplTest {
 
         when(userExistsByEmailPort.existsByEmail(anyString())).thenReturn(false);
         when(passwordEncoderPort.encode(new Password("123456"))).thenReturn("hashedPassword");
-        doNothing().when(insertUserPort).insert(any(User.class));
+        when(insertUserPort.insert(any(User.class))).thenReturn(user);
 
         // Act
         insertUserUseCase.execute(user);
