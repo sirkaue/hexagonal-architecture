@@ -11,6 +11,7 @@ import com.sirkaue.hexagonalarchitecture.infra.adapters.in.dto.request.UpdatePas
 import com.sirkaue.hexagonalarchitecture.infra.adapters.in.dto.request.UserRequest;
 import com.sirkaue.hexagonalarchitecture.infra.adapters.in.dto.response.UserResponse;
 import com.sirkaue.hexagonalarchitecture.infra.adapters.in.mapper.UserMapper;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,7 @@ public class UserController {
     private final UpdateUserPasswordUseCase updateUserPasswordUseCase;
 
     @PostMapping
-    public ResponseEntity<Void> insert(@RequestBody UserRequest userRequest) {
+    public ResponseEntity<Void> insert(@Valid @RequestBody UserRequest userRequest) {
         User user = userMapper.toUser(userRequest);
         User savedUser = insertUserUseCase.execute(user);
         URI location = ServletUriComponentsBuilder
@@ -49,13 +50,13 @@ public class UserController {
     }
 
     @PatchMapping("/{id}/email")
-    public ResponseEntity<Void> updateEmail(@PathVariable final Long id, @RequestBody UpdateEmailRequest request) {
+    public ResponseEntity<Void> updateEmail(@PathVariable final Long id, @Valid @RequestBody UpdateEmailRequest request) {
         updateUserEmailUseCase.execute(id, request.email());
         return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{id}/password")
-    public ResponseEntity<Void> updatePassword(@PathVariable final Long id, @RequestBody UpdatePasswordRequest request) {
+    public ResponseEntity<Void> updatePassword(@PathVariable final Long id, @Valid @RequestBody UpdatePasswordRequest request) {
         updateUserPasswordUseCase.execute(id, new Password(request.currentPassword()), new Password(request.newPassword()),
                 new Password(request.confirmPassword()));
         return ResponseEntity.noContent().build();
