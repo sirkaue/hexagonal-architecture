@@ -3,6 +3,7 @@ package com.sirkaue.hexagonalarchitecture.infra.adapters.in.web.exception;
 import com.sirkaue.hexagonalarchitecture.domain.exception.*;
 import com.sirkaue.hexagonalarchitecture.infra.adapters.in.dto.response.ErrorResponse;
 import com.sirkaue.hexagonalarchitecture.infra.adapters.in.dto.response.FieldErrorResponse;
+import com.sirkaue.hexagonalarchitecture.infra.adapters.in.dto.response.ValidationErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -49,19 +50,13 @@ public class RestExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> handleValidationExceptions(MethodArgumentNotValidException ex, HttpServletRequest request) {
+    public ResponseEntity<ValidationErrorResponse> handleValidationExceptions(MethodArgumentNotValidException ex, HttpServletRequest request) {
 
         List<FieldErrorResponse> errors = ex.getBindingResult().getFieldErrors().stream()
                 .map(error -> new FieldErrorResponse(error.getField(), error.getDefaultMessage()))
                 .toList();
 
-        if (errors.size() == 1) {
-            FieldErrorResponse singleError = errors.get(0);
-            ErrorResponse errorResponse = new ErrorResponse(request, HttpStatus.UNPROCESSABLE_ENTITY, singleError.message());
-            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(errorResponse);
-        }
-
-        ErrorResponse errorResponse = new ErrorResponse(request, HttpStatus.UNPROCESSABLE_ENTITY, errors);
+        ValidationErrorResponse errorResponse = new ValidationErrorResponse(request, HttpStatus.UNPROCESSABLE_ENTITY, errors);
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(errorResponse);
     }
 
@@ -70,7 +65,7 @@ public class RestExceptionHandler {
             HttpStatus status,
             Exception exception
     ) {
-        ErrorResponse error = new ErrorResponse(request, status, exception.getMessage());
+        ErrorResponse error = new ErrorResponse(request, status, exception);
         return ResponseEntity.status(status).contentType(APPLICATION_JSON).body(error);
     }
 }
