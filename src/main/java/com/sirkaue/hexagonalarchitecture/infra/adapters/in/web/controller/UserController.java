@@ -95,6 +95,22 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    @Operation(summary = "Update user password", description = "Updates the password of an existing user after " +
+            "validating the current password. Password must be at least 6 characters long.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Password updated successfully"),
+            @ApiResponse(responseCode = "422", description = "Validation error - password must be at least " +
+                    "6 characters long",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ValidationErrorResponse.class))),
+            @ApiResponse(responseCode = "400", description = "Business rules violation - possible reasons: " +
+                    "current password incorrect, passwords don't match, or new password same as current",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "404", description = "User not found",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class)))
+    })
     @PatchMapping("/{id}/password")
     public ResponseEntity<Void> updatePassword(@PathVariable final Long id, @Valid @RequestBody UpdatePasswordRequest request) {
         updateUserPasswordUseCase.execute(id, new Password(request.currentPassword()), new Password(request.newPassword()),
