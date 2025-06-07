@@ -60,6 +60,15 @@ public class UserController {
         return ResponseEntity.created(location).build();
     }
 
+    @Operation(summary = "Get user by ID", description = "Retrieves a user's details by their unique identifier")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User found successfully",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = UserResponse.class))),
+            @ApiResponse(responseCode = "404", description = "User not found",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class)))
+    })
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> findById(@PathVariable final Long id) {
         User user = findUserByIdUseCase.execute(id);
