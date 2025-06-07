@@ -9,8 +9,15 @@ import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Password;
 import com.sirkaue.hexagonalarchitecture.infra.adapters.in.dto.request.UpdateEmailRequest;
 import com.sirkaue.hexagonalarchitecture.infra.adapters.in.dto.request.UpdatePasswordRequest;
 import com.sirkaue.hexagonalarchitecture.infra.adapters.in.dto.request.UserRequest;
+import com.sirkaue.hexagonalarchitecture.infra.adapters.in.dto.response.ErrorResponse;
 import com.sirkaue.hexagonalarchitecture.infra.adapters.in.dto.response.UserResponse;
+import com.sirkaue.hexagonalarchitecture.infra.adapters.in.dto.response.ValidationErrorResponse;
 import com.sirkaue.hexagonalarchitecture.infra.adapters.in.mapper.UserMapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +37,17 @@ public class UserController {
     private final UpdateUserEmailUseCase updateUserEmailUseCase;
     private final UpdateUserPasswordUseCase updateUserPasswordUseCase;
 
+    @Operation(summary = "Create a new user", description = "Creates a new user with the provided details")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "User created successfully",
+                    content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "422", description = "Invalid input data",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ValidationErrorResponse.class))),
+            @ApiResponse(responseCode = "409", description = "Email already exists",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class)))
+    })
     @PostMapping
     public ResponseEntity<Void> insert(@Valid @RequestBody UserRequest userRequest) {
         User user = userMapper.toUser(userRequest);
