@@ -76,6 +76,19 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
+    @Operation(summary = "Update user email", description = "Updates the email address of an existing user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Email updated successfully"),
+            @ApiResponse(responseCode = "422", description = "Invalid email format",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ValidationErrorResponse.class))),
+            @ApiResponse(responseCode = "404", description = "User not found",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "409", description = "New email already in use",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class)))
+    })
     @PatchMapping("/{id}/email")
     public ResponseEntity<Void> updateEmail(@PathVariable final Long id, @Valid @RequestBody UpdateEmailRequest request) {
         updateUserEmailUseCase.execute(id, request.email());
