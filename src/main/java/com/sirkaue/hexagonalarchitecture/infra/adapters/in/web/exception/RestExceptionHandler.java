@@ -19,6 +19,21 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 @RestControllerAdvice
 public class RestExceptionHandler {
 
+    @ExceptionHandler(InvalidNameException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidNameException(InvalidNameException ex, HttpServletRequest request) {
+        return createErrorResponse(request, HttpStatus.BAD_REQUEST, ex);
+    }
+
+    @ExceptionHandler(InvalidEmailException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidEmailException(InvalidEmailException ex, HttpServletRequest request) {
+        return createErrorResponse(request, HttpStatus.BAD_REQUEST, ex);
+    }
+
+    @ExceptionHandler(InvalidPasswordException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidPasswordException(InvalidPasswordException ex, HttpServletRequest request) {
+        return createErrorResponse(request, HttpStatus.BAD_REQUEST, ex);
+    }
+
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleUserNotFoundException(UserNotFoundException ex, HttpServletRequest request) {
         return createErrorResponse(request, HttpStatus.NOT_FOUND, ex);
