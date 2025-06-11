@@ -41,6 +41,9 @@ public class UserController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "User created successfully",
                     content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "400", description = "Invalid domain data (e.g., invalid email format or password too short)",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "422", description = "Invalid input data",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ValidationErrorResponse.class))),
@@ -79,6 +82,9 @@ public class UserController {
     @Operation(summary = "Update user email", description = "Updates the email address of an existing user")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Email updated successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid domain data (e.g., invalid email format)",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "422", description = "Invalid email format",
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = ValidationErrorResponse.class))),
@@ -99,6 +105,9 @@ public class UserController {
             "validating the current password. Password must be at least 6 characters long.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Password updated successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid domain data (e.g., password too short)",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "422", description = "Validation error - password must be at least " +
                     "6 characters long",
                     content = @Content(mediaType = "application/json",
