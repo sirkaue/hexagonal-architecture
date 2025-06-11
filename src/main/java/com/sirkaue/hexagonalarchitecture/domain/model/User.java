@@ -1,16 +1,17 @@
 package com.sirkaue.hexagonalarchitecture.domain.model;
 
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Email;
+import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Name;
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Password;
 
 public class User {
 
     private final Long id;
-    private final String name;
+    private final Name name;
     private final Email email;
     private final Password password;
 
-    public User(Long id, String name, Email email, Password password) {
+    public User(Long id, Name name, Email email, Password password) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -21,7 +22,7 @@ public class User {
         return id;
     }
 
-    public String getName() {
+    public Name getName() {
         return name;
     }
 
