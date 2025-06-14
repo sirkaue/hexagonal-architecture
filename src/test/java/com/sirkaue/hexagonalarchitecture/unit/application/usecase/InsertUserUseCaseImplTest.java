@@ -7,6 +7,7 @@ import com.sirkaue.hexagonalarchitecture.application.usecase.InsertUserUseCaseIm
 import com.sirkaue.hexagonalarchitecture.domain.exception.EmailAlreadyExistsException;
 import com.sirkaue.hexagonalarchitecture.domain.model.User;
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Email;
+import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Name;
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Password;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,7 +38,7 @@ class InsertUserUseCaseImplTest {
     @Test
     void shouldInsertUserWhenEmailDoesNotExist() {
         // Arrange
-        User user = new User(1L, "John Doe", new Email("teste@teste.com"), new Password("123456"));
+        User user = new User(1L, new Name("John Doe"), new Email("teste@teste.com"), new Password("123456"));
 
         when(userExistsByEmailPort.existsByEmail(anyString())).thenReturn(false);
         when(passwordEncoderPort.encode(new Password("123456"))).thenReturn("hashedPassword");
@@ -56,7 +57,7 @@ class InsertUserUseCaseImplTest {
     void shouldThrowEmailAlreadyExistsExceptionWhenEmailExists() {
         // Arrange
         final String EMAIL_ALREADY_EXISTS = "Email already exists";
-        User user = new User(1L, "John Doe", new Email("teste@teste.com"), new Password("123456"));
+        User user = new User(1L, new Name("John Doe"), new Email("teste@teste.com"), new Password("123456"));
         when(userExistsByEmailPort.existsByEmail(anyString())).thenReturn(true);
 
         // Act

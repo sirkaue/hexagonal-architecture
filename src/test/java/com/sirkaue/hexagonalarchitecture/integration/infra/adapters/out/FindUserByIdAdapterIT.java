@@ -39,7 +39,7 @@ class FindUserByIdAdapterIT {
         assertTrue(result.isPresent(), "User should be found");
         User user = result.get();
         assertEquals(userEntity.getId(), user.getId(), "IDs devem ser iguais");
-        assertEquals(userEntity.getName(), user.getName(), "Nomes devem ser iguais");
+        assertEquals(userEntity.getName(), user.getName().value(), "Nomes devem ser iguais");
         assertEquals(userEntity.getEmail(), user.getEmail().value(), "Emails devem ser iguais");
         assertEquals(userEntity.getPassword(), user.getPassword().value(), "Senhas devem ser iguais");
     }

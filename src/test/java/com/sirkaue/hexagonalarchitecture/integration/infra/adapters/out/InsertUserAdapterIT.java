@@ -2,6 +2,7 @@ package com.sirkaue.hexagonalarchitecture.integration.infra.adapters.out;
 
 import com.sirkaue.hexagonalarchitecture.domain.model.User;
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Email;
+import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Name;
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Password;
 import com.sirkaue.hexagonalarchitecture.infra.adapters.out.InsertUserAdapter;
 import com.sirkaue.hexagonalarchitecture.infra.adapters.out.persistence.mapper.impl.UserEntityMapperImpl;
@@ -25,14 +26,14 @@ public class InsertUserAdapterIT {
     @Test
     void shouldInsertUserWhenIdDoesNotExist() {
         // Arrange
-        User user = new User(null, "John Doe", new Email("john@example.com"), new Password("password123"));
+        User user = new User(null, new Name("John Doe"), new Email("john@example.com"), new Password("password123"));
 
         // Act
         User insertedUser = adapter.insert(user);
 
         // Assert
         assertNotNull(insertedUser.getId());
-        assertEquals("John Doe", insertedUser.getName());
+        assertEquals("John Doe", insertedUser.getName().value());
         assertEquals("john@example.com", insertedUser.getEmail().value());
         assertEquals("password123", insertedUser.getPassword().value());
     }

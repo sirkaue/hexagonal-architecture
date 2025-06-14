@@ -9,6 +9,7 @@ import com.sirkaue.hexagonalarchitecture.domain.exception.PasswordConfirmationEx
 import com.sirkaue.hexagonalarchitecture.domain.exception.SamePasswordException;
 import com.sirkaue.hexagonalarchitecture.domain.model.User;
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Email;
+import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Name;
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Password;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,7 +42,7 @@ class UpdateUserPasswordUseCaseImplTest {
     @Test
     void shouldUpdateUserPassword() {
         // Arrange
-        User user = new User(1L, "John Doe", new Email("teste@teste.com"), new Password("123456"));
+        User user = new User(1L, new Name("John Doe"), new Email("teste@teste.com"), new Password("123456"));
         String newPassword = "admin123";
         User userWithNewPassword = user.changePasswordTo(newPassword);
 
@@ -78,7 +79,7 @@ class UpdateUserPasswordUseCaseImplTest {
     @Test
     void shouldThrowExceptionWhenCurrentPasswordIsIncorrect() {
         // Arrange
-        User user = new User(1L, "John Doe", new Email("teste@teste.com"), new Password("123456"));
+        User user = new User(1L, new Name("John Doe"), new Email("teste@teste.com"), new Password("123456"));
         Password currentPassword = new Password("wrongPassword");
         Password newPassword = new Password("admin123");
         Password confirmPassword = new Password("admin123");
@@ -98,7 +99,7 @@ class UpdateUserPasswordUseCaseImplTest {
     @Test
     void shouldThrowExceptionWhenNewPasswordIsSameAsCurrent() {
         // Arrange
-        User user = new User(1L, "John Doe", new Email("teste@teste.com"), new Password("123456"));
+        User user = new User(1L, new Name("John Doe"), new Email("teste@teste.com"), new Password("123456"));
         Password currentPassword = new Password("123456");
         Password newPassword = new Password("123456");
         Password confirmPassword = new Password("123456");
@@ -120,7 +121,7 @@ class UpdateUserPasswordUseCaseImplTest {
     @Test
     void shouldThrowExceptionWhenNewPasswordAndConfirmPasswordDoNotMatch() {
         // Arrange
-        User user = new User(1L, "John Doe", new Email("teste@teste.com"), new Password("123456"));
+        User user = new User(1L, new Name("John Doe"), new Email("teste@teste.com"), new Password("123456"));
 
         Password currentPassword = new Password("123456");
         Password newPassword = new Password("admin123");

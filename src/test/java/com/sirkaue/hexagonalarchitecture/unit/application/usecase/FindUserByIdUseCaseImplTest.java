@@ -5,6 +5,7 @@ import com.sirkaue.hexagonalarchitecture.application.usecase.FindUserByIdUseCase
 import com.sirkaue.hexagonalarchitecture.domain.exception.UserNotFoundException;
 import com.sirkaue.hexagonalarchitecture.domain.model.User;
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Email;
+import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Name;
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Password;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,7 +30,7 @@ class FindUserByIdUseCaseImplTest {
     @Test
     void shouldFindUserById() {
         // Arrange
-        User user = new User(1L, "John Doe", new Email("teste@teste.com"), new Password("123456"));
+        User user = new User(1L, new Name("John Doe"), new Email("teste@teste.com"), new Password("123456"));
         when(entityFinderHelper.findUserByIdOrThrow(anyLong())).thenReturn(user);
 
         // Act
@@ -43,7 +44,7 @@ class FindUserByIdUseCaseImplTest {
     @Test
     void shouldThrowExceptionWhenUserNotFound() {
         // Arrange
-        User user = new User(1L, "John Doe", new Email("teste@teste.com"), new Password("123456"));
+        User user = new User(1L, new Name("John Doe"), new Email("teste@teste.com"), new Password("123456"));
         when(entityFinderHelper.findUserByIdOrThrow(anyLong()))
                 .thenThrow(new UserNotFoundException(String.format("User with id %s not found", user.getId())));
 

@@ -2,6 +2,7 @@ package com.sirkaue.hexagonalarchitecture.integration.infra.adapters.out;
 
 import com.sirkaue.hexagonalarchitecture.domain.model.User;
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Email;
+import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Name;
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Password;
 import com.sirkaue.hexagonalarchitecture.infra.adapters.out.UpdateUserEmailAdapter;
 import com.sirkaue.hexagonalarchitecture.infra.adapters.out.persistence.entity.UserEntity;
@@ -31,7 +32,7 @@ public class UpdateUserEmailAdapterIT {
         // Arrange
         UserEntity userEntity = helper.persistDefaultUser();
 
-        User user = new User(userEntity.getId(), userEntity.getName(),
+        User user = new User(userEntity.getId(), new Name(userEntity.getName()),
                 new Email(userEntity.getEmail()), new Password(userEntity.getPassword()));
 
         String newEmail = "test@test.com";

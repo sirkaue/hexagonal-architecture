@@ -7,6 +7,7 @@ import com.sirkaue.hexagonalarchitecture.application.usecase.UpdateUserEmailUseC
 import com.sirkaue.hexagonalarchitecture.domain.exception.EmailAlreadyExistsException;
 import com.sirkaue.hexagonalarchitecture.domain.model.User;
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Email;
+import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Name;
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Password;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,7 +40,7 @@ class UpdateUserEmailUseCaseImplTest {
     @Test
     void shouldUpdateUserEmail() {
         // Arrange
-        User user = new User(1L, "John Doe", new Email("teste@teste.com"), new Password("123456"));
+        User user = new User(1L, new Name("John Doe"), new Email("teste@teste.com"), new Password("123456"));
         String newEmail = "admin@admin.com";
         User userWithNewEmail = user.changeEmailTo(newEmail);
 
@@ -69,7 +70,7 @@ class UpdateUserEmailUseCaseImplTest {
     void shouldNotUpdateAndThrowEmailAlreadyExistsExceptionWhenEmailIsTheSame() {
         // Arrange
         final String SAME_EMAIL_EXCEPTION = "The new email is the same as the current one";
-        User user = new User(1L, "John Doe", new Email("teste@teste.com"), new Password("123456"));
+        User user = new User(1L, new Name("John Doe"), new Email("teste@teste.com"), new Password("123456"));
         String sameEmail = "teste@teste.com";
 
         when(entityFinderHelper.findUserByIdOrThrow(anyLong())).thenReturn(user);
@@ -90,7 +91,7 @@ class UpdateUserEmailUseCaseImplTest {
     void shouldNotUpdateAndThrowEmailAlreadyExistsExceptionWhenEmailExists() {
         // Arrange
         final String EMAIL_ALREADY_EXISTS_EXCEPTION = "Email already exists";
-        User user = new User(1L, "John Doe", new Email("teste@teste.com"), new Password("123456"));
+        User user = new User(1L, new Name("John Doe"), new Email("teste@teste.com"), new Password("123456"));
         String newEmail = "admin@admin.com";
 
         when(entityFinderHelper.findUserByIdOrThrow(anyLong())).thenReturn(user);
