@@ -34,6 +34,8 @@ public User changePasswordTo(String newPassword) {
 
 Organizado em três camadas principais:
 
+`application`, `domain` e `infra`
+
 ```plaintext
 .
 └── com.sirkaue.hexagonalarchitecture/
