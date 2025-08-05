@@ -259,7 +259,7 @@ cd hexagonal-architecture
 Execute o comando abaixo na raiz do projeto (onde está o `Dockerfile` e o `docker-compose.yml`):
 
 ```bash
-docker-compose up --build
+docker compose up --build
 ```
 - A aplicação será executada em `http://localhost:8080`
 - O MySQL estará disponível internamente como `mysql-db` na rede do Docker.
