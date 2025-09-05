@@ -4,7 +4,7 @@ import com.sirkaue.hexagonalarchitecture.application.ports.in.InsertUserUseCase;
 import com.sirkaue.hexagonalarchitecture.application.ports.out.InsertUserPort;
 import com.sirkaue.hexagonalarchitecture.application.ports.out.PasswordEncoderPort;
 import com.sirkaue.hexagonalarchitecture.application.ports.out.UserExistsByEmailPort;
-import com.sirkaue.hexagonalarchitecture.domain.exception.EmailAlreadyExistsException;
+import com.sirkaue.hexagonalarchitecture.domain.exception.exceptions.EmailAlreadyExistsException;
 import com.sirkaue.hexagonalarchitecture.domain.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

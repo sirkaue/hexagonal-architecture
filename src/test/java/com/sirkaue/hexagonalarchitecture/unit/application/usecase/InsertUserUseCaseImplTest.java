@@ -4,7 +4,7 @@ import com.sirkaue.hexagonalarchitecture.application.ports.out.InsertUserPort;
 import com.sirkaue.hexagonalarchitecture.application.ports.out.PasswordEncoderPort;
 import com.sirkaue.hexagonalarchitecture.application.ports.out.UserExistsByEmailPort;
 import com.sirkaue.hexagonalarchitecture.application.usecase.InsertUserUseCaseImpl;
-import com.sirkaue.hexagonalarchitecture.domain.exception.EmailAlreadyExistsException;
+import com.sirkaue.hexagonalarchitecture.domain.exception.exceptions.EmailAlreadyExistsException;
 import com.sirkaue.hexagonalarchitecture.domain.model.User;
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Email;
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Name;

@@ -1,6 +1,6 @@
 package com.sirkaue.hexagonalarchitecture.infra.adapters.in.web.exception;
 
-import com.sirkaue.hexagonalarchitecture.domain.exception.*;
+import com.sirkaue.hexagonalarchitecture.domain.exception.exceptions.*;
 import com.sirkaue.hexagonalarchitecture.infra.adapters.in.dto.response.ErrorResponse;
 import com.sirkaue.hexagonalarchitecture.infra.adapters.in.dto.response.FieldErrorResponse;
 import com.sirkaue.hexagonalarchitecture.infra.adapters.in.dto.response.ValidationErrorResponse;

@@ -4,7 +4,7 @@ import com.sirkaue.hexagonalarchitecture.application.helper.EntityFinderHelper;
 import com.sirkaue.hexagonalarchitecture.application.ports.in.UpdateUserEmailUseCase;
 import com.sirkaue.hexagonalarchitecture.application.ports.out.UpdateUserPort;
 import com.sirkaue.hexagonalarchitecture.application.ports.out.UserExistsByEmailPort;
-import com.sirkaue.hexagonalarchitecture.domain.exception.EmailAlreadyExistsException;
+import com.sirkaue.hexagonalarchitecture.domain.exception.exceptions.EmailAlreadyExistsException;
 import com.sirkaue.hexagonalarchitecture.domain.model.User;
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Email;
 import org.slf4j.Logger;

@@ -1,6 +1,6 @@
 package com.sirkaue.hexagonalarchitecture.unit.domain.valueobjects;
 
-import com.sirkaue.hexagonalarchitecture.domain.exception.InvalidEmailException;
+import com.sirkaue.hexagonalarchitecture.domain.exception.exceptions.InvalidEmailException;
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Email;
 import org.junit.jupiter.api.Test;
 

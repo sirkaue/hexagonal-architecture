@@ -1,4 +1,4 @@
-package com.sirkaue.hexagonalarchitecture.domain.exception;
+package com.sirkaue.hexagonalarchitecture.domain.exception.exceptions;
 
 public class InvalidNameException extends RuntimeException {
 

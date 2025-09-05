@@ -1,6 +1,6 @@
 package com.sirkaue.hexagonalarchitecture.domain.valueobjects;
 
-import com.sirkaue.hexagonalarchitecture.domain.exception.InvalidPasswordException;
+import com.sirkaue.hexagonalarchitecture.domain.exception.exceptions.InvalidPasswordException;
 
 public record Password(String value) {
 

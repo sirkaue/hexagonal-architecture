@@ -1,6 +1,6 @@
 package com.sirkaue.hexagonalarchitecture.domain.valueobjects;
 
-import com.sirkaue.hexagonalarchitecture.domain.exception.InvalidNameException;
+import com.sirkaue.hexagonalarchitecture.domain.exception.exceptions.InvalidNameException;
 
 public record Name(String value) {
 

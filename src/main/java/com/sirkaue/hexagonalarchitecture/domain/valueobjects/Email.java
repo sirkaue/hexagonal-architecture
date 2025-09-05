@@ -1,6 +1,6 @@
 package com.sirkaue.hexagonalarchitecture.domain.valueobjects;
 
-import com.sirkaue.hexagonalarchitecture.domain.exception.InvalidEmailException;
+import com.sirkaue.hexagonalarchitecture.domain.exception.exceptions.InvalidEmailException;
 
 public record Email(String value) {
 

@@ -1,6 +1,6 @@
 package com.sirkaue.hexagonalarchitecture.unit.domain.valueobjects;
 
-import com.sirkaue.hexagonalarchitecture.domain.exception.InvalidPasswordException;
+import com.sirkaue.hexagonalarchitecture.domain.exception.exceptions.InvalidPasswordException;
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Password;
 import org.junit.jupiter.api.Test;
 

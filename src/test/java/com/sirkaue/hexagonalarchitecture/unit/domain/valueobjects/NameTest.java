@@ -1,6 +1,6 @@
 package com.sirkaue.hexagonalarchitecture.unit.domain.valueobjects;
 
-import com.sirkaue.hexagonalarchitecture.domain.exception.InvalidNameException;
+import com.sirkaue.hexagonalarchitecture.domain.exception.exceptions.InvalidNameException;
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Name;
 import org.junit.jupiter.api.Test;
 
