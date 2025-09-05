@@ -13,12 +13,12 @@ public record ErrorResponse(
         String path,
         String method) {
 
-    public ErrorResponse(HttpServletRequest request, HttpStatus status, Exception message) {
+    public ErrorResponse(HttpServletRequest request, HttpStatus status, String message) {
         this(
                 LocalDateTime.now(),
                 status.value(),
                 status.getReasonPhrase(),
-                message.getMessage(),
+                message,
                 request.getRequestURI(),
                 request.getMethod());
     }
