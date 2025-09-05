@@ -28,6 +28,12 @@ services:
       - mysql_data:/var/lib/mysql
     networks:
       - user-network
+    # Adicione healthcheck para maior confiabilidade
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 5s
+      timeout: 10s
+      retries: 10
 
 volumes:
   mysql_data:

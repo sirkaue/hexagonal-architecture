@@ -6,6 +6,13 @@ RUN mvn clean package -DskipTests
 
 # Etapa 2: Runtime com Java 21
 FROM eclipse-temurin:21-jdk-alpine
+
+# Instala netcat para o script de wait
+RUN apk add --no-cache netcat-openbsd
+
 VOLUME /tmp
 COPY --from=builder /app/target/*.jar app.jar
-ENTRYPOINT ["sh", "-c", "sleep 20 && java -jar /app.jar"]
+COPY wait-for.sh /wait-for.sh
+RUN chmod +x /wait-for.sh
+
+ENTRYPOINT ["/wait-for.sh", "mysql-db", "java", "-jar", "/app.jar"]
