@@ -46,7 +46,7 @@ class FindUserByIdUseCaseImplTest {
         // Arrange
         User user = new User(1L, new Name("John Doe"), new Email("teste@teste.com"), new Password("123456"));
         when(entityFinderHelper.findUserByIdOrThrow(anyLong()))
-                .thenThrow(new UserNotFoundException(String.format("User with id %s not found", user.getId())));
+                .thenThrow(new UserNotFoundException(user.getId()));
 
         // Act
         Executable executable = () -> findUserByIdUseCase.execute(user.getId());

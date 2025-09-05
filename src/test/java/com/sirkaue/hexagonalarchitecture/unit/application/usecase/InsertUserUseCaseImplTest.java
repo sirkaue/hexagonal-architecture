@@ -4,6 +4,7 @@ import com.sirkaue.hexagonalarchitecture.application.ports.out.InsertUserPort;
 import com.sirkaue.hexagonalarchitecture.application.ports.out.PasswordEncoderPort;
 import com.sirkaue.hexagonalarchitecture.application.ports.out.UserExistsByEmailPort;
 import com.sirkaue.hexagonalarchitecture.application.usecase.InsertUserUseCaseImpl;
+import com.sirkaue.hexagonalarchitecture.domain.exception.DomainErrorCode;
 import com.sirkaue.hexagonalarchitecture.domain.exception.exceptions.EmailAlreadyExistsException;
 import com.sirkaue.hexagonalarchitecture.domain.model.User;
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Email;
@@ -56,7 +57,7 @@ class InsertUserUseCaseImplTest {
     @Test
     void shouldThrowEmailAlreadyExistsExceptionWhenEmailExists() {
         // Arrange
-        final String EMAIL_ALREADY_EXISTS = "Email already exists";
+        final String EMAIL_ALREADY_EXISTS_EXCEPTION = DomainErrorCode.EMAIL_ALREADY_EXISTS.getDefaultMessage();
         User user = new User(1L, new Name("John Doe"), new Email("teste@teste.com"), new Password("123456"));
         when(userExistsByEmailPort.existsByEmail(anyString())).thenReturn(true);
 
@@ -65,7 +66,7 @@ class InsertUserUseCaseImplTest {
 
         // Assert
         var ex = assertThrows(EmailAlreadyExistsException.class, executable);
-        assertEquals(EMAIL_ALREADY_EXISTS, ex.getMessage());
+        assertEquals(EMAIL_ALREADY_EXISTS_EXCEPTION, ex.getMessage());
 
         verify(userExistsByEmailPort, times(1)).existsByEmail(anyString());
         verify(passwordEncoderPort, never()).encode(any());

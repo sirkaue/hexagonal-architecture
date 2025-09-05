@@ -1,6 +1,8 @@
 package com.sirkaue.hexagonalarchitecture.unit.domain.valueobjects;
 
 import com.sirkaue.hexagonalarchitecture.domain.exception.exceptions.InvalidNameException;
+import com.sirkaue.hexagonalarchitecture.domain.exception.exceptions.NameBlankException;
+import com.sirkaue.hexagonalarchitecture.domain.exception.exceptions.NameTooLongException;
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Name;
 import org.junit.jupiter.api.Test;
 
@@ -27,19 +29,19 @@ class NameTest {
 
     @Test
     void shouldThrowExceptionWhenNameIsNull() {
-        assertThrows(InvalidNameException.class, () -> new Name(null));
+        assertThrows(NameBlankException.class, () -> new Name(null));
     }
 
     @Test
     void shouldThrowExceptionWhenNameIsBlank() {
-        assertThrows(InvalidNameException.class, () -> new Name(""));
-        assertThrows(InvalidNameException.class, () -> new Name("   "));
+        assertThrows(NameBlankException.class, () -> new Name(""));
+        assertThrows(NameBlankException.class, () -> new Name("   "));
     }
 
     @Test
     void shouldThrowExceptionWhenNameIsTooLong() {
         String longName = "a".repeat(101);
-        assertThrows(InvalidNameException.class, () -> new Name(longName));
+        assertThrows(NameTooLongException.class, () -> new Name(longName));
     }
 
     @Test

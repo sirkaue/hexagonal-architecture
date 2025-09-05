@@ -4,7 +4,9 @@ import com.sirkaue.hexagonalarchitecture.application.helper.EntityFinderHelper;
 import com.sirkaue.hexagonalarchitecture.application.ports.out.UpdateUserPort;
 import com.sirkaue.hexagonalarchitecture.application.ports.out.UserExistsByEmailPort;
 import com.sirkaue.hexagonalarchitecture.application.usecase.UpdateUserEmailUseCaseImpl;
+import com.sirkaue.hexagonalarchitecture.domain.exception.DomainErrorCode;
 import com.sirkaue.hexagonalarchitecture.domain.exception.exceptions.EmailAlreadyExistsException;
+import com.sirkaue.hexagonalarchitecture.domain.exception.exceptions.SameEmailException;
 import com.sirkaue.hexagonalarchitecture.domain.model.User;
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Email;
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Name;
@@ -69,7 +71,7 @@ class UpdateUserEmailUseCaseImplTest {
     @Test
     void shouldNotUpdateAndThrowEmailAlreadyExistsExceptionWhenEmailIsTheSame() {
         // Arrange
-        final String SAME_EMAIL_EXCEPTION = "The new email is the same as the current one";
+        final String SAME_EMAIL_EXCEPTION = DomainErrorCode.SAME_EMAIL.getDefaultMessage();
         User user = new User(1L, new Name("John Doe"), new Email("teste@teste.com"), new Password("123456"));
         String sameEmail = "teste@teste.com";
 
@@ -79,7 +81,7 @@ class UpdateUserEmailUseCaseImplTest {
         Executable executable = () -> updateUserEmailUseCase.execute(user.getId(), sameEmail);
 
         // Assert
-        var ex = assertThrows(EmailAlreadyExistsException.class, executable);
+        var ex = assertThrows(SameEmailException.class, executable);
         assertEquals(SAME_EMAIL_EXCEPTION, ex.getMessage());
 
         verify(entityFinderHelper).findUserByIdOrThrow(user.getId());
@@ -90,7 +92,7 @@ class UpdateUserEmailUseCaseImplTest {
     @Test
     void shouldNotUpdateAndThrowEmailAlreadyExistsExceptionWhenEmailExists() {
         // Arrange
-        final String EMAIL_ALREADY_EXISTS_EXCEPTION = "Email already exists";
+        final String EMAIL_ALREADY_EXISTS_EXCEPTION = DomainErrorCode.EMAIL_ALREADY_EXISTS.getDefaultMessage();
         User user = new User(1L, new Name("John Doe"), new Email("teste@teste.com"), new Password("123456"));
         String newEmail = "admin@admin.com";
 
