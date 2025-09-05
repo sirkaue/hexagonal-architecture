@@ -6,6 +6,6 @@ import com.sirkaue.hexagonalarchitecture.domain.exception.DomainException;
 public final class SamePasswordException extends DomainException {
 
     public SamePasswordException() {
-        super(DomainErrorCode.SAME_EMAIL);
+        super(DomainErrorCode.SAME_PASSWORD);
     }
 }
