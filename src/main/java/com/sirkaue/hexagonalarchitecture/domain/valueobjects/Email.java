@@ -6,7 +6,7 @@ public record Email(String value) {
 
     public Email {
         if (value == null || !value.matches("[^@]+@[^\\.]+\\..+")) {
-            throw new InvalidEmailException("Invalid email format");
+            throw new InvalidEmailException();
         }
         value = value.toLowerCase();
     }

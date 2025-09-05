@@ -14,6 +14,6 @@ public class EntityFinderHelper {
 
     public User findUserByIdOrThrow(Long id) {
         return findUserByIdPort.findById(id).orElseThrow(
-                () -> new UserNotFoundException(String.format("User with id %s not found", id)));
+                () -> new UserNotFoundException(id));
     }
 }

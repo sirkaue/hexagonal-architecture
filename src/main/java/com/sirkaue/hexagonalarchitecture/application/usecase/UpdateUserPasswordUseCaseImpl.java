@@ -52,21 +52,21 @@ public class UpdateUserPasswordUseCaseImpl implements UpdateUserPasswordUseCase 
     private void validateCurrentPassword(Password currentPassword, Password currentPasswordProvided) {
         log.info("Validating current password");
         if (!passwordEncoderPort.matches(currentPasswordProvided, currentPassword.value())) {
-            throw new IncorrectCurrentPasswordException("The current password is incorrect");
+            throw new IncorrectCurrentPasswordException();
         }
     }
 
     private void validateNewPasswordIsDifferent(Password currentPassword, Password newPassword) {
         log.info("Validating new password");
         if (passwordEncoderPort.matches(newPassword, currentPassword.value())) {
-            throw new SamePasswordException("The new password is the same as the current one");
+            throw new SamePasswordException();
         }
     }
 
     private void validatePasswordConfirmation(Password newPassword, Password confirmPassword) {
         log.info("Validating password confirmation");
         if (!newPassword.equals(confirmPassword)) {
-            throw new PasswordConfirmationException("Password confirmation does not match");
+            throw new PasswordConfirmationException();
         }
     }
 }

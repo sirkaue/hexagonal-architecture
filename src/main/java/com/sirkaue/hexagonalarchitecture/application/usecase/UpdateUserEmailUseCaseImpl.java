@@ -5,6 +5,7 @@ import com.sirkaue.hexagonalarchitecture.application.ports.in.UpdateUserEmailUse
 import com.sirkaue.hexagonalarchitecture.application.ports.out.UpdateUserPort;
 import com.sirkaue.hexagonalarchitecture.application.ports.out.UserExistsByEmailPort;
 import com.sirkaue.hexagonalarchitecture.domain.exception.exceptions.EmailAlreadyExistsException;
+import com.sirkaue.hexagonalarchitecture.domain.exception.exceptions.SameEmailException;
 import com.sirkaue.hexagonalarchitecture.domain.model.User;
 import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Email;
 import org.slf4j.Logger;
@@ -24,7 +25,6 @@ public class UpdateUserEmailUseCaseImpl implements UpdateUserEmailUseCase {
         this.updateUserPort = updateUserPort;
     }
 
-
     @Override
     public User execute(Long id, String newEmail) {
         log.info("Finding user with id: {}", id);
@@ -40,11 +40,11 @@ public class UpdateUserEmailUseCaseImpl implements UpdateUserEmailUseCase {
 
     private void validateEmail(Email newEmail, User user) {
         if (user.getEmail().equals(newEmail)) {
-            throw new EmailAlreadyExistsException("The new email is the same as the current one");
+            throw new SameEmailException();
         }
 
         if (userExistsByEmailPort.existsByEmail(newEmail.value())) {
-            throw new EmailAlreadyExistsException("Email already exists");
+            throw new EmailAlreadyExistsException();
         }
     }
 }

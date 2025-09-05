@@ -29,7 +29,7 @@ public class InsertUserUseCaseImpl implements InsertUserUseCase {
         log.info("Creating user {} with email: {}", user.getName(), user.getEmail().value());
 
         if (userExistsByEmailPort.existsByEmail(user.getEmail().value())) {
-            throw new EmailAlreadyExistsException("Email already exists");
+            throw new EmailAlreadyExistsException();
         }
 
         log.info("Encoding password");
