@@ -9,7 +9,7 @@ import com.sirkaue.hexagonalarchitecture.infra.adapters.out.persistence.mapper.U
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserEntityMapperImpl implements UserEntityMapper {
+public final class UserEntityMapperImpl implements UserEntityMapper {
 
     @Override
     public UserEntity toUserEntity(User user) {

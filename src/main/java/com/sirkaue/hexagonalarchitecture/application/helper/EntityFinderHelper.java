@@ -4,7 +4,7 @@ import com.sirkaue.hexagonalarchitecture.application.ports.out.FindUserByIdPort;
 import com.sirkaue.hexagonalarchitecture.domain.exception.exceptions.UserNotFoundException;
 import com.sirkaue.hexagonalarchitecture.domain.model.User;
 
-public class EntityFinderHelper {
+public final class EntityFinderHelper {
 
     private final FindUserByIdPort findUserByIdPort;
 

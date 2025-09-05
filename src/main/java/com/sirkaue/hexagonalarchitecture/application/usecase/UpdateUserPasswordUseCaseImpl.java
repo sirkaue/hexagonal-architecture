@@ -12,7 +12,7 @@ import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Password;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class UpdateUserPasswordUseCaseImpl implements UpdateUserPasswordUseCase {
+public final class UpdateUserPasswordUseCaseImpl implements UpdateUserPasswordUseCase {
 
     private static final Logger log = LoggerFactory.getLogger(UpdateUserPasswordUseCaseImpl.class);
 

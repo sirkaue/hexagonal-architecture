@@ -9,7 +9,7 @@ import com.sirkaue.hexagonalarchitecture.domain.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class InsertUserUseCaseImpl implements InsertUserUseCase {
+public final class InsertUserUseCaseImpl implements InsertUserUseCase {
 
     private static final Logger log = LoggerFactory.getLogger(InsertUserUseCaseImpl.class);
 

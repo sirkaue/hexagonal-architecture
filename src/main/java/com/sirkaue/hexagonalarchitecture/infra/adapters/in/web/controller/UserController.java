@@ -31,7 +31,7 @@ import java.net.URI;
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
-public class UserController {
+public final class UserController {
 
     private final UserMapper userMapper;
     private final InsertUserUseCase insertUserUseCase;

@@ -10,7 +10,7 @@ import com.sirkaue.hexagonalarchitecture.infra.adapters.in.mapper.UserMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserMapperImpl implements UserMapper {
+public final class UserMapperImpl implements UserMapper {
 
     @Override
     public User toUser(UserRequest userRequest) {

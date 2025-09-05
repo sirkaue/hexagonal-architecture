@@ -6,7 +6,7 @@ import com.sirkaue.hexagonalarchitecture.domain.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class FindUserByIdUseCaseImpl implements FindUserByIdUseCase {
+public final class FindUserByIdUseCaseImpl implements FindUserByIdUseCase {
 
     private static final Logger log = LoggerFactory.getLogger(FindUserByIdUseCaseImpl.class);
 

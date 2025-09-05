@@ -17,7 +17,7 @@ import java.util.List;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 @RestControllerAdvice
-public class RestExceptionHandler {
+public final class RestExceptionHandler {
 
     @ExceptionHandler(DomainException.class)
     public ResponseEntity<ErrorResponse> handleDomainException(DomainException e, HttpServletRequest request) {

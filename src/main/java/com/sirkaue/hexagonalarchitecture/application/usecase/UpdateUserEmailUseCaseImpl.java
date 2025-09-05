@@ -11,7 +11,7 @@ import com.sirkaue.hexagonalarchitecture.domain.valueobjects.Email;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class UpdateUserEmailUseCaseImpl implements UpdateUserEmailUseCase {
+public final class UpdateUserEmailUseCaseImpl implements UpdateUserEmailUseCase {
 
     private static final Logger log = LoggerFactory.getLogger(UpdateUserEmailUseCaseImpl.class);
 
