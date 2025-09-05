@@ -1,8 +1,11 @@
 package com.sirkaue.hexagonalarchitecture.domain.exception.exceptions;
 
-public class PasswordConfirmationException extends RuntimeException {
+import com.sirkaue.hexagonalarchitecture.domain.exception.DomainErrorCode;
+import com.sirkaue.hexagonalarchitecture.domain.exception.DomainException;
 
-    public PasswordConfirmationException(String message) {
-        super(message);
+public final class PasswordConfirmationException extends DomainException {
+
+    public PasswordConfirmationException() {
+        super(DomainErrorCode.PASSWORD_CONFIRMATION);
     }
 }

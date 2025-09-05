@@ -1,9 +1,12 @@
 package com.sirkaue.hexagonalarchitecture.domain.exception.exceptions;
 
-public class InvalidPasswordException extends RuntimeException {
+import com.sirkaue.hexagonalarchitecture.domain.exception.DomainErrorCode;
+import com.sirkaue.hexagonalarchitecture.domain.exception.DomainException;
 
-    public InvalidPasswordException(String message) {
-        super(message);
+public final class InvalidPasswordException extends DomainException {
+
+    public InvalidPasswordException() {
+        super(DomainErrorCode.INVALID_PASSWORD);
     }
 }
 

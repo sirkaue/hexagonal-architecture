@@ -1,8 +1,11 @@
 package com.sirkaue.hexagonalarchitecture.domain.exception.exceptions;
 
-public class InvalidEmailException extends RuntimeException {
+import com.sirkaue.hexagonalarchitecture.domain.exception.DomainErrorCode;
+import com.sirkaue.hexagonalarchitecture.domain.exception.DomainException;
 
-    public InvalidEmailException(String message) {
-        super(message);
+public final class InvalidEmailException extends DomainException {
+
+    public InvalidEmailException() {
+        super(DomainErrorCode.INVALID_EMAIL);
     }
 }

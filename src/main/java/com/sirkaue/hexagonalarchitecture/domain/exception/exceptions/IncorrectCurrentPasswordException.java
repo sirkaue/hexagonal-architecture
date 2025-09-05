@@ -1,8 +1,11 @@
 package com.sirkaue.hexagonalarchitecture.domain.exception.exceptions;
 
-public class IncorrectCurrentPasswordException extends RuntimeException {
+import com.sirkaue.hexagonalarchitecture.domain.exception.DomainErrorCode;
+import com.sirkaue.hexagonalarchitecture.domain.exception.DomainException;
 
-    public IncorrectCurrentPasswordException(String message) {
-        super(message);
+public final class IncorrectCurrentPasswordException extends DomainException {
+
+    public IncorrectCurrentPasswordException() {
+        super(DomainErrorCode.INCORRECT_CURRENT_PASSWORD);
     }
 }

@@ -1,8 +1,11 @@
 package com.sirkaue.hexagonalarchitecture.domain.exception.exceptions;
 
-public class InvalidNameException extends RuntimeException {
+import com.sirkaue.hexagonalarchitecture.domain.exception.DomainErrorCode;
+import com.sirkaue.hexagonalarchitecture.domain.exception.DomainException;
 
-    public InvalidNameException(String message) {
-        super(message);
+public final class InvalidNameException extends DomainException {
+
+    public InvalidNameException() {
+        super(DomainErrorCode.INVALID_NAME);
     }
 }
